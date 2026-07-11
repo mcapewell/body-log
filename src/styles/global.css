@@ -1,0 +1,453 @@
+:root {
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --surface-2: #273449;
+  --border: #334155;
+  --text: #e2e8f0;
+  --text-muted: #94a3b8;
+  --accent: #38bdf8;
+  --accent-strong: #0ea5e9;
+  --danger: #f87171;
+  --up: #f59e0b;
+  --down: #34d399;
+  --radius: 14px;
+  --tabbar-h: 64px;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.app__main {
+  flex: 1;
+  padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom));
+}
+
+/* Screens ------------------------------------------------------------------ */
+.screen {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 16px 16px 8px;
+}
+
+.screen--center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  color: var(--text-muted);
+}
+
+.screen__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-top: env(safe-area-inset-top);
+}
+
+.screen__header h1 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+/* Buttons ------------------------------------------------------------------ */
+.btn {
+  appearance: none;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn--primary {
+  background: var(--accent-strong);
+  border-color: var(--accent-strong);
+  color: #05202e;
+}
+
+.btn--danger {
+  background: transparent;
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+/* Nudge banner ------------------------------------------------------------- */
+.nudge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #1d4ed8 0%, #0ea5e9 100%);
+  color: #f8fafc;
+  padding: 12px 14px;
+  border-radius: var(--radius);
+  text-decoration: none;
+  margin-bottom: 16px;
+}
+
+.nudge__icon {
+  font-size: 1.2rem;
+}
+
+.nudge__text {
+  flex: 1;
+  font-size: 0.9rem;
+}
+
+.nudge__cta {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Empty states ------------------------------------------------------------- */
+.empty {
+  text-align: center;
+  padding: 48px 16px;
+  color: var(--text-muted);
+}
+
+.empty__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 6px;
+}
+
+.empty__body {
+  margin: 0;
+}
+
+/* Metric grid (dashboard) -------------------------------------------------- */
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.metric-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+}
+
+.metric-card__label {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.metric-card__value {
+  font-size: 1.7rem;
+  font-weight: 700;
+  margin-top: 4px;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.metric-card__unit {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.metric-card__date {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.metric-card__trends {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.trend {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: var(--surface-2);
+}
+
+.trend--up {
+  color: var(--up);
+}
+
+.trend--down {
+  color: var(--down);
+}
+
+.trend--same,
+.trend--none {
+  color: var(--text-muted);
+}
+
+/* Forms -------------------------------------------------------------------- */
+.field {
+  display: block;
+  margin-bottom: 14px;
+}
+
+.field__label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.field__unit {
+  opacity: 0.8;
+}
+
+.field__input {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 1rem;
+  padding: 12px;
+}
+
+.field__input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.field__input--area {
+  resize: vertical;
+}
+
+.field-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+/* History ------------------------------------------------------------------ */
+.history {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.history__item {
+  display: block;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.history__date {
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.history__values {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.history__chip {
+  font-size: 0.78rem;
+  background: var(--surface-2);
+  border-radius: 6px;
+  padding: 3px 8px;
+  color: var(--text-muted);
+}
+
+.history__notes {
+  margin-top: 8px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* Segmented controls ------------------------------------------------------- */
+.segmented {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 6px;
+  margin-bottom: 14px;
+}
+
+.segmented__btn {
+  flex: 1;
+  min-width: fit-content;
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.segmented__btn--active {
+  background: var(--accent-strong);
+  color: #05202e;
+}
+
+.segmented--small .segmented__btn {
+  font-size: 0.8rem;
+}
+
+/* Charts ------------------------------------------------------------------- */
+.chart-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+}
+
+.chart-card__canvas {
+  position: relative;
+  height: 300px;
+}
+
+.chart-empty {
+  color: var(--text-muted);
+  text-align: center;
+  padding: 40px 0;
+}
+
+/* Settings ----------------------------------------------------------------- */
+.settings-group {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 14px;
+}
+
+.settings-group__title {
+  font-size: 0.95rem;
+  margin: 0 0 12px;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.toggle input {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--accent-strong);
+}
+
+.settings-note {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin: 8px 0 0;
+}
+
+.settings-note--muted {
+  text-align: center;
+  opacity: 0.6;
+  margin-top: 20px;
+}
+
+.settings-status {
+  background: var(--surface-2);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 0.85rem;
+  color: var(--accent);
+}
+
+/* Tab bar ------------------------------------------------------------------ */
+.tabbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: calc(var(--tabbar-h) + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
+  display: flex;
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--border);
+}
+
+.tabbar__item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 0.68rem;
+}
+
+.tabbar__item--active {
+  color: var(--accent);
+}
+
+.tabbar__icon {
+  font-size: 1.2rem;
+}
