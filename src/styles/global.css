@@ -239,6 +239,12 @@ body {
 
 .field__input {
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  /* iOS date/number inputs keep an intrinsic width that ignores width:100%
+     and overflow the page unless native appearance is removed. */
+  -webkit-appearance: none;
+  appearance: none;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 10px;
@@ -267,6 +273,21 @@ body {
   gap: 10px;
   flex-wrap: wrap;
   margin-top: 16px;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.form-error {
+  margin-top: 14px;
+  background: rgba(248, 113, 113, 0.12);
+  border: 1px solid var(--danger);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 0.85rem;
+  color: var(--danger);
 }
 
 /* History ------------------------------------------------------------------ */
