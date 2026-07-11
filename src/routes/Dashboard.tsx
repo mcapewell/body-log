@@ -21,7 +21,7 @@ export default function Dashboard() {
   return (
     <div className="screen">
       <header className="screen__header">
-        <h1>Body-Log</h1>
+        <h1>Body Log</h1>
         <Link to="/log" className="btn btn--primary">
           + Log
         </Link>
