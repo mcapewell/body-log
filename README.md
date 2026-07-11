@@ -40,6 +40,19 @@ App icons are generated (no image tooling needed) with:
 node scripts/generate-icons.mjs
 ```
 
+## Deployment
+
+Hosted on **GitHub Pages** via `.github/workflows/deploy.yml`: every push to `main`
+runs the tests, builds, and publishes `dist/` to Pages. A one-time setup step is
+required in the repo — **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+
+The site is a project page served under a sub-path, so `vite.config.ts` sets
+`base = '/body-log/'` and the router uses `import.meta.env.BASE_URL`. The build copies
+`index.html` to `404.html` so deep-link refreshes resolve to the SPA. If you rename the
+repo or move to a custom domain, update `base` accordingly.
+
+Live app: https://mcapewell.github.io/body-log/
+
 ## Data & privacy
 
 Everything is stored in your browser's IndexedDB. Nothing is sent anywhere. Use **Settings → Backup →
