@@ -5,6 +5,7 @@ import { useSettings } from '../state/SettingsContext';
 import { getSession, putSession, deleteSession } from '../db/sessions';
 import { fromDisplay, roundDisplay, toDisplay } from '../lib/units';
 import { todayISO } from '../lib/dates';
+import { newId } from '../lib/id';
 import MetricInput from '../components/MetricInput';
 
 type FormValues = Record<MetricKey, string>;
@@ -23,6 +24,8 @@ export default function AddSession() {
   const [notes, setNotes] = useState('');
   const [loaded, setLoaded] = useState(!editing);
   const [existing, setExisting] = useState<Session | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (!id) return;
@@ -53,12 +56,13 @@ export default function AddSession() {
   async function handleSave() {
     const now = Date.now();
     const session: Session = {
-      id: existing?.id ?? crypto.randomUUID(),
+      id: existing?.id ?? newId(),
       date,
-      notes: notes.trim() || undefined,
       createdAt: existing?.createdAt ?? now,
       updatedAt: now,
     };
+    const trimmedNotes = notes.trim();
+    if (trimmedNotes) session.notes = trimmedNotes;
     for (const key of METRIC_KEYS) {
       const raw = values[key].trim();
       if (raw === '') continue;
@@ -66,15 +70,27 @@ export default function AddSession() {
       if (!Number.isFinite(num)) continue;
       session[key] = fromDisplay(num, METRICS[key].kind, settings.units);
     }
-    await putSession(session);
-    navigate('/history');
+    setSaving(true);
+    setError(null);
+    try {
+      await putSession(session);
+      navigate('/history');
+    } catch (err) {
+      setSaving(false);
+      setError(err instanceof Error ? err.message : 'Could not save. Please try again.');
+    }
   }
 
   async function handleDelete() {
     if (!existing) return;
     if (!confirm('Delete this measurement session?')) return;
-    await deleteSession(existing.id);
-    navigate('/history');
+    setError(null);
+    try {
+      await deleteSession(existing.id);
+      navigate('/history');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not delete. Please try again.');
+    }
   }
 
   if (!loaded) return <div className="screen screen--center">Loading…</div>;
@@ -120,8 +136,8 @@ export default function AddSession() {
       </label>
 
       <div className="form-actions">
-        <button className="btn btn--primary" onClick={handleSave}>
-          {editing ? 'Save changes' : 'Save session'}
+        <button className="btn btn--primary" onClick={handleSave} disabled={saving}>
+          {saving ? 'Saving…' : editing ? 'Save changes' : 'Save session'}
         </button>
         {editing && (
           <button className="btn btn--danger" onClick={handleDelete}>
@@ -129,6 +145,12 @@ export default function AddSession() {
           </button>
         )}
       </div>
+
+      {error && (
+        <p className="form-error" role="alert">
+          {error}
+        </p>
+      )}
     </div>
   );
 }

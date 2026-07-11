@@ -15,8 +15,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'apple-touch-icon.png'],
       manifest: {
-        name: 'Body-Log — Measurements Tracker',
-        short_name: 'Body-Log',
+        name: 'Body Log — Measurements Tracker',
+        short_name: 'Body Log',
         description: 'Private, offline-first bodybuilding measurements tracker.',
         theme_color: '#0f172a',
         background_color: '#0f172a',
